@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>My Awesome Website</title>
+
 </head>
 <body>
 
@@ -13,5 +14,53 @@
 
 <p>Check out the <a href="https://pages.github.com">GitHub Pages documentation</a> for more details.</p>
 
+<h1>JavaScript Computation Result</h1>
+
+<p id="result"></p>
+
+<script>
+  // Define the class with fields
+
+  class Bonus {
+
+  }
+
+  class HPP extends Bonus {
+
+    constructor(val) {
+      this.val = val;
+    }
+
+    equips(char) {
+      char.hpp += this.val;
+    }
+  }
+  class Character {
+    constructor(base_atk, base_hp) {
+      this.base_atk = base_atk;
+      this.base_hp = base_hp;
+      this.hpp = 0;
+    }
+
+    equip (item) {
+      item.equips(this)
+    }
+  
+    hp() {
+      return this.base_hp * (1 + this.hpp / 100);
+    }
+  }
+  
+  // Create an instance of the class
+  const hutao = new Character(106, 15552);
+  
+  const hpsands = new HPP(46.6);
+  // Perform the computation
+  hutao.equip(hpsands);
+  const hp = hutao.hp();
+  
+  // Display the result on the page
+  document.querySelector("#result").textContent = "hp: " + hp;
+  </script>
 </body>
 </html>
