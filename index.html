@@ -16,51 +16,114 @@
 
 <h1>JavaScript Computation Result</h1>
 
-<p id="result"></p>
+<table id="results">
+  <tr>
+    <th>Weapon</th>
+    <th>Base ATK</th>
+    <th>ATKP</th>
+    <th>ATK</th>
+  </tr>
+</table>
 
 <script>
   // Define the class with fields
 
   class Bonus {
 
-  }
-
-  class HPP extends Bonus {
-
     constructor(val) {
       this.val = val;
     }
+
+  }
+
+  class HPP extends Bonus {
 
     equips(char) {
       char.hpp += this.val;
     }
   }
+
+  class BaseATK extends Bonus {
+    equips(char) {
+      char.base_atk += this.val;
+    }
+  }
+
+  class ATKP extends Bonus {
+
+    equips(char) {
+      char.atkp += this.val;
+    }
+  }
+  
   class Character {
     constructor(base_atk, base_hp) {
       this.base_atk = base_atk;
       this.base_hp = base_hp;
       this.hpp = 0;
+      this.atkp = 0;
     }
 
     equip (item) {
       item.equips(this)
     }
+
+    equips (items) {
+      items.forEach (item => {
+        this.equip(item)
+      })
+    }
   
     hp() {
       return this.base_hp * (1 + this.hpp / 100);
     }
+
+    atk() {
+      return this.base_atk * (1 + this.atkp / 100);
+    }
   }
   
-  // Create an instance of the class
-  const hutao = new Character(106, 15552);
+  function compute (weapon) {
+    const xianyun = new Character(335, 10409);
+    xianyun.atkp = 28.8;
   
-  const hpsands = new HPP(46.6);
-  // Perform the computation
-  hutao.equip(hpsands);
-  const hp = hutao.hp();
+    const atksands = new ATKP(46.6);
+    const tpeff = new ATKP(18);
+    xianyun.equip(atksands);
+    xianyun.equip(atksands);
+    xianyun.equip(atksands);
+    xianyun.equip(tpeff);
+    xianyun.equip(tpeff);
+    xianyun.equips(weapon);
+    return xianyun;
+  }
+
+  function weapon(name, base_atk, bonus) {
+    return {
+      name : name,
+      properties: [new BaseATK(base_atk), bonus]
+    }
+  }
   
-  // Display the result on the page
-  document.querySelector("#result").textContent = "hp: " + hp;
+  const weapons = [
+    weapon("Ballad of the Boundless Blue", 565, new ATKP(0)),
+    weapon("Eye of Perception", 454, new ATKP(55.1)),
+    weapon("Flowing Purity", 565, new ATKP(27.6)),
+    weapon("Oathsworn Eye", 565, new ATKP(27.6)),
+    weapon("Royal Grimoire", 565, new ATKP(27.6)),
+    weapon("Frostbearer", 510, new ATKP(41.3)),
+    weapon("Crane's Echoing Call", 741, new ATKP(16.1))
+  ]
+
+  const table = document.getElementById("results");
+  weapons.forEach(weapon => {
+  const row = table.insertRow();
+  row.insertCell().textContent = weapon.name;
+  character = compute(weapon.properties);
+  row.insertCell().textContent = character.base_atk;
+  row.insertCell().textContent = character.atkp;
+  row.insertCell().textContent = character.atk();
+});
   </script>
 </body>
 </html>
