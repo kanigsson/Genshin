@@ -1,129 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>My Awesome Website</title>
-
-</head>
+  <title>My Vue.js App</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <body>
+  <div id="app">
+    <h1>{{message}}</h1>
+    <select v-model="selected">
+      <option v-for="char in characters" v-bind:value="char"> {{ char.name }} </option>
+    </select>
+    <span>Selected: {{ selected.name }}</span>
+    <br/><span>Id: {{ selected.id }}</span>
 
-<h1>Welcome to my website!</h1>
+    </div>
 
-<p>This is a simple static webpage created using GitHub Pages.</p>
-
-<p>Feel free to customize it with your own content and style.</p>
-
-<p>Check out the <a href="https://pages.github.com">GitHub Pages documentation</a> for more details.</p>
-
-<h1>JavaScript Computation Result</h1>
-
-<table id="results">
-  <tr>
-    <th>Weapon</th>
-    <th>Base ATK</th>
-    <th>ATKP</th>
-    <th>ATK</th>
-  </tr>
-</table>
-
-<script>
-  // Define the class with fields
-
-  class Bonus {
-
-    constructor(val) {
-      this.val = val;
-    }
-
-  }
-
-  class HPP extends Bonus {
-
-    equips(char) {
-      char.hpp += this.val;
-    }
-  }
-
-  class BaseATK extends Bonus {
-    equips(char) {
-      char.base_atk += this.val;
-    }
-  }
-
-  class ATKP extends Bonus {
-
-    equips(char) {
-      char.atkp += this.val;
-    }
-  }
-  
-  class Character {
-    constructor(base_atk, base_hp) {
-      this.base_atk = base_atk;
-      this.base_hp = base_hp;
-      this.hpp = 0;
-      this.atkp = 0;
-    }
-
-    equip (item) {
-      item.equips(this)
-    }
-
-    equips (items) {
-      items.forEach (item => {
-        this.equip(item)
-      })
-    }
-  
-    hp() {
-      return this.base_hp * (1 + this.hpp / 100);
-    }
-
-    atk() {
-      return this.base_atk * (1 + this.atkp / 100);
-    }
-  }
-  
-  function compute (weapon) {
-    const xianyun = new Character(335, 10409);
-    xianyun.atkp = 28.8;
-  
-    const atksands = new ATKP(46.6);
-    const tpeff = new ATKP(18);
-    xianyun.equip(atksands);
-    xianyun.equip(atksands);
-    xianyun.equip(atksands);
-    xianyun.equip(tpeff);
-    xianyun.equip(tpeff);
-    xianyun.equips(weapon);
-    return xianyun;
-  }
-
-  function weapon(name, base_atk, bonus) {
-    return {
-      name : name,
-      properties: [new BaseATK(base_atk), bonus]
-    }
-  }
-  
-  const weapons = [
-    weapon("Ballad of the Boundless Blue", 565, new ATKP(0)),
-    weapon("Eye of Perception", 454, new ATKP(55.1)),
-    weapon("Flowing Purity", 565, new ATKP(27.6)),
-    weapon("Oathsworn Eye", 565, new ATKP(27.6)),
-    weapon("Royal Grimoire", 565, new ATKP(27.6)),
-    weapon("Frostbearer", 510, new ATKP(41.3)),
-    weapon("Crane's Echoing Call", 741, new ATKP(16.1))
-  ]
-
-  const table = document.getElementById("results");
-  weapons.forEach(weapon => {
-  const row = table.insertRow();
-  row.insertCell().textContent = weapon.name;
-  character = compute(weapon.properties);
-  row.insertCell().textContent = character.base_atk;
-  row.insertCell().textContent = character.atkp;
-  row.insertCell().textContent = character.atk();
-});
-  </script>
+    <script src="app.js"></script>
 </body>
 </html>
