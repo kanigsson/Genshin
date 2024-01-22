@@ -6,14 +6,19 @@
 <body>
   <div id="app">
     <h1>{{message}}</h1>
-    <select v-model="selected">
+    <select v-model="selected_char">
       <option v-for="char in characters" v-bind:value="char"> {{ char.name }} </option>
     </select>
-    <span>Selected: {{ selected.name }}</span>
-    <br/><span>Id: {{ selected.id }}</span>
+    <select v-model="selected_weapon">
+      <option v-for="weapon in weapons" v-bind:value="weapon"> {{ weapon.name }} </option>
+    </select>
+    <button  @click="compute()">Compute</button>    
+    <span>Selected: {{ selected_char.name }}</span>
+    <br/><span>ATK: {{ selected_char.atk() }}</span>
+    <br/><span>result: {{ result }}</span>
 
     </div>
 
-    <script src="app.js"></script>
+    <script type="module" src="app.js"></script>
 </body>
 </html>
