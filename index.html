@@ -12,9 +12,17 @@
     <button  @click="addChar()">Add</button>    
     <button  @click="compute()">Compute</button>
     <ul>
-      <li v-for="char in characters">
-        {{ char.name }}
-        <button @click="removeChar(char)">X</button>
+      <li v-for="char in team">
+        <h2> {{char.character.name}}</h2>
+        <select v-model="char.weapon">
+          <option v-for="weapon in weapons.filter((w) => w.weapon_type = char.character.weapon_type)"
+             v-bind:value="weapon">
+              {{ weapon.name }}
+          </option>
+        </select>
+        <br/> {{char.weapon.name}}
+        <br/>
+        <button @click="removeChar(char)">Remove</button>
       </li>
     </ul>
     <br/><span>result: {{ result }}</span>

@@ -1,4 +1,4 @@
-import { Characters, Hutao, Skyward_Spine, Weapons } from "./char.js";
+import { Character, Characters, Hutao, Skyward_Spine, Weapons } from "./char.js";
 
 const { createApp } = Vue
 
@@ -6,24 +6,20 @@ createApp({
   data() {
     return {
       message: 'Hello Vue!',
-      characters : [],
-      selected : Hutao,
+      team : [],
+      selected_char : Hutao,
       all_characters: Characters,
+      weapons: Weapons,
       result: "",
     }
   },
   methods : {
-    compute () {
-      const mychar = this.selected_char;
-      mychar.equips(this.selected_weapon.buffs);
-      this.result = mychar.atk();
-    },
     addChar () {
-      this.characters.push(this.selected_char);
+      this.team.push(new Character(this.selected_char));
       this.selected_char = Hutao;
     },
     removeChar(char) {
-      this.characters = this.characters.filter((t) => t.name != char.name)
+      this.team = this.team.filter((t) => t.character.name != char.character.name)
     }
   }
 }).mount('#app')
